@@ -35,7 +35,8 @@ export function URLScanner() {
   const [error, setError] = useState<string | null>(null)
 
   // Backend API URL - Change this if your backend is running on a different port
-  const API_URL = "http://localhost:5000"
+  const API_URL = process.env.NEXT_PUBLIC_FLASK_API || "http://localhost:5000"
+
 
   const handleScan = async () => {
     if (!url.trim()) return
