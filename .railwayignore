@@ -1,10 +1,12 @@
-# Ignore frontend files
-node_modules/
-.next/
-app/
-components/
-public/
-styles/
+# Ignore ALL frontend files
+node_modules
+.next
+app
+components
+public
+styles
+hooks
+lib
 package.json
 package-lock.json
 pnpm-lock.yaml
@@ -15,13 +17,8 @@ components.json
 .nvmrc
 vercel.json
 vercel_build.bat
-.vercel/
+.vercel
+next-env.d.ts
 
-# Keep only backend files
-!app.py
-!requirements.txt
-!Procfile
-!runtime.txt
-!railway.json
-!nixpacks.toml
-!saved_models/
+# Ignore API routes (Next.js)
+api
