@@ -14,7 +14,22 @@ from bs4 import BeautifulSoup
 import requests
 
 app = Flask(__name__)
-CORS(app)
+
+# Configure CORS for production
+ALLOWED_ORIGINS = [
+    'https://phish66.netlify.app',
+    'http://localhost:3000',
+    'http://localhost:5000'
+]
+
+CORS(app, resources={
+    r"/*": {
+        "origins": ALLOWED_ORIGINS,
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"],
+        "supports_credentials": True
+    }
+})
 
 # ============================================================================
 # LOAD MODEL AND PREPROCESSING OBJECTS
@@ -555,7 +570,11 @@ if __name__ == '__main__':
     print("\n" + "="*80)
     print("🚀 PHISHING DETECTION API SERVER")
     print("="*80)
-    print("\nServer starting on http://localhost:5000")
+    
+    # Get port from environment variable (Railway provides this)
+    port = int(os.environ.get('PORT', 5000))
+    
+    print(f"\nServer starting on port {port}")
     print("\nAPI Endpoints:")
     print("  • GET  /                    - API info")
     print("  • GET  /health              - Health check")
@@ -567,4 +586,6 @@ if __name__ == '__main__':
     print("\n✅ Ready to accept requests from React frontend!")
     print("="*80 + "\n")
     
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Use debug=False in production
+    debug_mode = os.environ.get('FLASK_ENV') != 'production'
+    app.run(debug=debug_mode, host='0.0.0.0', port=port)
