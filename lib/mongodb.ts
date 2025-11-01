@@ -15,10 +15,13 @@ declare global {
 
 if (!global._mongoClientPromise) {
   client = new MongoClient(uri, {
-    tls: true,
-    tlsAllowInvalidCertificates: true,
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
   })
-  global._mongoClientPromise = client.connect()
+  global._mongoClientPromise = client.connect().catch((err) => {
+    console.error('MongoDB connection error:', err)
+    throw err
+  })
 }
 
 clientPromise = global._mongoClientPromise!
