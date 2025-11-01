@@ -35,7 +35,7 @@ export function URLScanner() {
   const [error, setError] = useState<string | null>(null)
 
   // Backend API URL - Change this if your backend is running on a different port
-  const API_URL =  "http://localhost:5000"
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://phish-backend-6fti.onrender.com"
 
 
   const handleScan = async () => {
